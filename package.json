@@ -1,0 +1,65 @@
+{
+  "name": "bravia-simple-ip-control",
+  "version": "1.0.0",
+  "description": "Control your Sony Bravia TV over the network",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "babel src -d dist -D",
+    "example": "node ./dist/example.js",
+    "prepublish": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/forty2/bravia-simple-ip-control.git"
+  },
+  "keywords": [
+    "sony",
+    "bravia",
+    "remote",
+    "control",
+    "home",
+    "automation"
+  ],
+  "author": "Zach Bean <zb@forty2.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-core": "^6.14.0",
+    "babel-plugin-syntax-function-bind": "^6.13.0",
+    "babel-plugin-transform-function-bind": "^6.8.0",
+    "babel-plugin-transform-object-rest-spread": "^6.8.0",
+    "babel-preset-env": "^1.4.0"
+  },
+  "babel": {
+    "sourceMaps": "inline",
+    "presets": [
+      [
+        "env",
+        {
+          "targets": {
+            "node": 6
+          }
+        }
+      ]
+    ],
+    "plugins": [
+      "syntax-function-bind",
+      "transform-function-bind",
+      "transform-object-rest-spread"
+    ]
+  },
+  "engines": {
+    "node": ">=6.0"
+  },
+  "bugs": {
+    "url": "https://github.com/forty2/bravia-simple-ip-control/issues"
+  },
+  "homepage": "https://github.com/forty2/bravia-simple-ip-control#readme",
+  "dependencies": {
+    "debug": "^2.2.0",
+    "message-socket": "^1.0.3",
+    "node-ssdp": "^2.8.0",
+    "short-uuid": "^2.0.0",
+    "symbol-observable": "^1.0.2"
+  }
+}
