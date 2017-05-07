@@ -39,7 +39,7 @@ Once you have a device object, you have a number of control commands at your dis
 
 #### sendIrCode
 
-Send an IR code to the TV.  See the protocol document for a full list of available IR code names.
+Send an IR code to the TV.  See [KEYS](KEYS.md) for a full list of available IR code names.
 
 #### isOn.get()
 #### isOn.set(value)
@@ -65,12 +65,12 @@ Get or set the current channel.
 #### tripletChannel.get()
 #### tripletChannel.set(value)
 
-Get or set the current "triplet" channel.  (I don't currently know what a "triplet" channel is.  See the protocol document if you want to try to figure it out.)
+Get or set the current "triplet" channel.  (I don't currently know what a "triplet" channel is.)
 
 #### inputSource.get()
 #### inputSource.set(value)
 
-Get or set the current input source (antenna, cable, etc).  See the protocol document for a full list.
+Get or set the current input source (antenna, cable, etc).
 
 #### input.get()
 #### input.set(value)
