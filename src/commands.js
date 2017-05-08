@@ -49,36 +49,38 @@ function getSender(ctx, outgoingMessage, fourCC, returnMapper) {
     return new Observable(
         observer => {
             let isClosed = false;
+            let sub;
             try {
                 !isClosed && self._socket.send(outgoingMessage);
-                Observable
-                    .from(
-                        self
-                            ._socket
-                    )
-                    ::take(1)
-                    ::map(msg => msg.match(`\\${HEADER}([AN])([A-Z]{4})(.{16})\n`))
-                    ::filter(x => x && x.length)
-                    ::filter(([ , type, inFourCC, param ]) =>
-                        type === 'A' && inFourCC === fourCC
-                    )
-                    ::map(x => x.pop())
-                    .subscribe(
-                        x => {
-                            if (x === GENERIC_FAILURE) {
-                                !isClosed && observer.error(new Error("Something went wrong"));
-                            }
-                            else if (x === NO_SUCH_THING_FAILURE) {
-                                !isClosed && observer.error(new Error(`Couldn't set value to ${value}; there's no such thing`));
-                            }
-                            else if (!isClosed) {
-                                if (returnMapper) {
-                                    observer.next(returnMapper.to(x));
+                sub =
+                    Observable
+                        .from(
+                            self
+                                ._socket
+                        )
+                        ::take(1)
+                        ::map(msg => msg.match(`\\${HEADER}([AN])([A-Z]{4})(.{16})\n`))
+                        ::filter(x => x && x.length)
+                        ::filter(([ , type, inFourCC, param ]) =>
+                            type === 'A' && inFourCC === fourCC
+                        )
+                        ::map(x => x.pop())
+                        .subscribe(
+                            x => {
+                                if (x === GENERIC_FAILURE) {
+                                    !isClosed && observer.error(new Error("Something went wrong"));
                                 }
-                                observer.complete()
+                                else if (x === NO_SUCH_THING_FAILURE) {
+                                    !isClosed && observer.error(new Error(`Couldn't set value to ${value}; there's no such thing`));
+                                }
+                                else if (!isClosed) {
+                                    if (returnMapper) {
+                                        observer.next(returnMapper.to(x));
+                                    }
+                                    observer.complete()
+                                }
                             }
-                        }
-                    )
+                        )
             }
             catch (e) {
                 observer.error(e);
@@ -87,6 +89,7 @@ function getSender(ctx, outgoingMessage, fourCC, returnMapper) {
             return {
                 unsubscribe() {
                     isClosed = true;
+                    sub && sub.unsubscribe();
                 },
                 get closed() {
                     return isClosed;
