@@ -233,7 +233,7 @@ const commands = {
                 channel = parseInt(channel, 10);
                 subchannel = parseInt(subchannel.replace(/8*$/, ''), 10);
 
-                return { channel, subchannel };
+                return [ channel, subchannel ].join('.');
             }
         }
     },
